@@ -91,9 +91,9 @@ while(True) :
 
 
 
-# To save graphs of all countries
-# for index in range(104,len(listOfCountries)) :
-#     plot(countries=[listOfCountries[index]],dailyDeaths=False,dailyCases=False,totalDeaths=True,totalCases=False)
+# # To save graphs of all countries
+# for index in range(0,len(listOfCountries)) :
+#     plot(countries=[listOfCountries[index]],dailyDeaths=True,dailyCases=True,totalDeaths=True,totalCases=True)
 #     continue
 
 
