@@ -4,7 +4,7 @@
 # url='https://opendata.ecdc.europa.eu/covid19/casedistribution/csv'
 # s=requests.get(url).content
 # c=pd.read_csv(io.StringIO(s.decode('utf-8')))
-# c.head()
+
 
 
 import pandas as pd
@@ -18,6 +18,12 @@ df=pd.read_csv('covid data')
 #list of countries in data
 listOfCountries=list(set(df['countriesAndTerritories']))
 listOfCountries.sort()
+
+#This did cause a lot of problem to find, the sort function arranged these two indices in a diffrent manner
+listOfCountries[-9],listOfCountries[-10]=listOfCountries[-10],listOfCountries[-9]
+
+
+
 
 #adding some extra columns for visualization purpose
 cummulativeDeaths=[]
@@ -43,7 +49,7 @@ df['Cummulative Cases'] = cummulativeCases
 
 
 
-
+#Function to plot line curve for the cases/deaths due to COVID-19 with time
 def plot(**kwargs) :
     plt.figure(figsize=(50,35),dpi=100)
     plt.title('Deaths/Cases due to covid-19 on a daily basis')
@@ -72,12 +78,7 @@ def plot(**kwargs) :
 
 
 
-# To save graphs of all countries
-# for index in range(104,len(listOfCountries)) :
-#     plot(countries=[listOfCountries[index]],dailyDeaths=False,dailyCases=False,totalDeaths=True,totalCases=False)
-#     continue
-
-
+#Intracting function
 while(True) :
     countries = input('Enter the country name you want to see stastics : \n').split()
     neededInsights=list(map(int,input('Choose the needed insights by typing the all needed numbers with space seperation \n'+
@@ -90,5 +91,9 @@ while(True) :
 
 
 
+# To save graphs of all countries
+# for index in range(104,len(listOfCountries)) :
+#     plot(countries=[listOfCountries[index]],dailyDeaths=False,dailyCases=False,totalDeaths=True,totalCases=False)
+#     continue
 
 
