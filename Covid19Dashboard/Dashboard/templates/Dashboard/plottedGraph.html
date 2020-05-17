@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Covid-19 Dashboard</title>
+    <body>
+    {% if path is not ''%}
+      {% load static %}
+      <!--While loading image from path just write static path-->
+      <img src="{% static path %}" alt={{path}}>
+    </div>
+    {%endif%}
+  </body>
+</html>

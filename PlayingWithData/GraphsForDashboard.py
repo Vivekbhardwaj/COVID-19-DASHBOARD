@@ -24,7 +24,6 @@ listOfCountries[-9],listOfCountries[-10]=listOfCountries[-10],listOfCountries[-9
 
 
 
-
 #adding some extra columns for visualization purpose
 cummulativeDeaths=[]
 cummulativeCases=[]
