@@ -44,7 +44,7 @@
       .banner {
       position: relative;
       height: 180px;
-      background-image: url("/uploads/media/default/0001/01/9e07ce3a601795a5ac09a66a0c1fc8978e0ee51a.jpeg");  
+      background-image: url("/static/x.jpg");
       background-size: cover;
       display: flex;
       justify-content: center;
@@ -137,11 +137,12 @@
       <form action="/dashboard/" method=POST>
         {% csrf_token %}
         <div class="banner">
+        {% load static%}
           <h1>Visualize the Pandemic</h1>
         </div>
         <p class="top-info">Want to visualize the data for covid-19 pendamic? See the graphs on the deaths/cases and compare it between countries and continents of your choice</p>
         <div class="item">
-          <p>Select the country you want to search<span class="required">*</span></p>
+          <p>Select the countries you want to search(Hold ctrl key and select multiple)<span class="required">*</span></p>
           <div class="name-item">
             <select multiple id="country" name="country">
               {% for country in countries %}
@@ -152,7 +153,7 @@
           </div>
         </div>
         <div class="item">
-          <p>Select the things you want to see<span class="required">*</span></p>
+          <p>Select the insights you want to visualize(Hold ctrl key to select minimum)<span class="required">*</span></p>
           <div class="name-item">
             <select multiple id="Query" name="typeOfQuery">
                 <option value=dailyDeaths>Daily Deaths</option>
@@ -162,9 +163,9 @@
             </select>
           </div>
         </div>
-        <div class="btn-block">
+        <div class="item">
          <p>Type the no of previous days you want to see data of :<span class="required">*</span></p>
-          <input type=number name='days'></input>
+          <input type="number" step="1" name='days'></input>
         </div>
         <div class="btn-block">
           <button type="submit" href="/">Apply</button>

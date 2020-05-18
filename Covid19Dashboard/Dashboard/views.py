@@ -3,6 +3,7 @@ from django.shortcuts import render,HttpResponse
 
 #Function to plot line curve for the cases/deaths due to COVID-19 with time
 def plot(**kwargs) :
+    import math
     import pandas as pd
     import numpy as np
     import matplotlib.pyplot as plt
@@ -21,7 +22,7 @@ def plot(**kwargs) :
     plt.title('Deaths/Cases due to covid-19 on a daily basis')
     for country in kwargs['countries'] :
         temp=df.loc[df['countriesAndTerritories']==country]
-        temp=temp[:30]
+        temp=temp[:kwargs['days']]
         temp=temp[::-1]
         if kwargs['dailyDeaths'] :
             plt.plot(temp['dateRep'],temp['deaths'],'*-',label='Deaths in '+country+' on daily basis')
@@ -33,9 +34,10 @@ def plot(**kwargs) :
             plt.plot(temp['dateRep'],temp['Cummulative Cases'],'.--',label='Total Cases in '+country)
 
     temp=df.loc[df['countriesAndTerritories']==kwargs['countries'][0]]
-    temp=temp[:30]
+    temp=temp[:kwargs['days']]
+    x=math.ceil(kwargs['days']/8)
     date=temp['dateRep']
-    date=date[::5]
+    date=date[::x]
     plt.xticks(date)
     plt.xlabel('Date')
     plt.ylabel('Deaths/Cases')
@@ -53,7 +55,7 @@ def index(request) :
     listofCountries=[]
     if request.POST.get('country') is not None :
         #this is a feature a simple request.POST.get('key') doesnt work if value of key is a list you need to use getlist
-        path,listofCountries=plot(countries=request.POST.getlist('country'),dailyDeaths= 'dailyDeaths' in request.POST.getlist('typeOfQuery'),dailyCases= 'dailyCases' in request.POST.getlist('typeOfQuery'),totalDeaths='totalDeaths' in request.POST.getlist('typeOfQuery'),totalCases='totalCases' in request.POST.getlist('typeOfQuery'),days=request.POST.get('days'))
+        path,listofCountries=plot(countries=request.POST.getlist('country'),dailyDeaths= 'dailyDeaths' in request.POST.getlist('typeOfQuery'),dailyCases= 'dailyCases' in request.POST.getlist('typeOfQuery'),totalDeaths='totalDeaths' in request.POST.getlist('typeOfQuery'),totalCases='totalCases' in request.POST.getlist('typeOfQuery'),days=int(request.POST.get('days')))
         print(request.POST)
         context={'countries':listofCountries,'path' : path}
         return render(request,'Dashboard/plottedGraph.html',context)
