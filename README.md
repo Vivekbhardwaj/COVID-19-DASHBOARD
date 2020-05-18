@@ -1,4 +1,5 @@
 # COVID-19-DASHBOARD
+![Landing Page](https://github.com/Vivekbhardwaj/COVID-19-DASHBOARD/blob/master/HomePage_form.png)
 
 This is a basic dashboard that will take input following from the user :
 
