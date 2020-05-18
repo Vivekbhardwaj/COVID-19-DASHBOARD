@@ -143,7 +143,7 @@
         <div class="item">
           <p>Select the country you want to search<span class="required">*</span></p>
           <div class="name-item">
-            <select id="country" name="country">
+            <select multiple id="country" name="country">
               {% for country in countries %}
                 <option value={{country}}>{{country}}</option>
                 <!--endfor comes without space-->
@@ -151,17 +151,25 @@
             </select>
           </div>
         </div>
+        <div class="item">
+          <p>Select the things you want to see<span class="required">*</span></p>
+          <div class="name-item">
+            <select multiple id="Query" name="typeOfQuery">
+                <option value=dailyDeaths>Daily Deaths</option>
+                <option value=dailyCases>Daily Cases</option>
+                <option value=totalDeaths>Total Deaths</option>
+                <option value=totalCases>Total Cases</option>
+            </select>
+          </div>
+        </div>
+        <div class="btn-block">
+         <p>Type the no of previous days you want to see data of :<span class="required">*</span></p>
+          <input type=number name='days'></input>
+        </div>
         <div class="btn-block">
           <button type="submit" href="/">Apply</button>
         </div>
       </form>
     </div>
-    <div>
-    {% if path is not ''%}
-      {% load static %}
-      <!--While loading image from path just write static path-->
-      <img src="{% static path %}" alt={{path}}>
-    </div>
-    {%endif%}
   </body>
 </html>

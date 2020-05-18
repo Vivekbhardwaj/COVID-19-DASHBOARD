@@ -21,6 +21,7 @@ def plot(**kwargs) :
     plt.title('Deaths/Cases due to covid-19 on a daily basis')
     for country in kwargs['countries'] :
         temp=df.loc[df['countriesAndTerritories']==country]
+        temp=temp[:30]
         temp=temp[::-1]
         if kwargs['dailyDeaths'] :
             plt.plot(temp['dateRep'],temp['deaths'],'*-',label='Deaths in '+country+' on daily basis')
@@ -32,8 +33,9 @@ def plot(**kwargs) :
             plt.plot(temp['dateRep'],temp['Cummulative Cases'],'.--',label='Total Cases in '+country)
 
     temp=df.loc[df['countriesAndTerritories']==kwargs['countries'][0]]
+    temp=temp[:30]
     date=temp['dateRep']
-    date=date[::13]
+    date=date[::5]
     plt.xticks(date)
     plt.xlabel('Date')
     plt.ylabel('Deaths/Cases')
@@ -50,8 +52,9 @@ def index(request) :
     path=''
     listofCountries=[]
     if request.POST.get('country') is not None :
-        path,listofCountries=plot(countries=[request.POST.get('country')],dailyDeaths= False,dailyCases= False,totalDeaths=True,totalCases=False)
-        print(path)
+        #this is a feature a simple request.POST.get('key') doesnt work if value of key is a list you need to use getlist
+        path,listofCountries=plot(countries=request.POST.getlist('country'),dailyDeaths= 'dailyDeaths' in request.POST.getlist('typeOfQuery'),dailyCases= 'dailyCases' in request.POST.getlist('typeOfQuery'),totalDeaths='totalDeaths' in request.POST.getlist('typeOfQuery'),totalCases='totalCases' in request.POST.getlist('typeOfQuery'),days=request.POST.get('days'))
+        print(request.POST)
         context={'countries':listofCountries,'path' : path}
         return render(request,'Dashboard/plottedGraph.html',context)
 
